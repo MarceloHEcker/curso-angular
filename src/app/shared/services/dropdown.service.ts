@@ -5,9 +5,17 @@ import { EstadoBr } from "../models/estado-br.model";
 
 @Injectable()
 export class DropdownService {
-  constructor(private http: HttpClient) {}
+  constructor( private http: HttpClient ) { }
 
   getEstadosBr() {
-    return this.http.get<EstadoBr[]>("assets/dados/estadosbr.json");
+    return this.http.get<EstadoBr[]>( "assets/dados/estadosbr.json" );
+  }
+
+  getCargos() {
+    return [
+      { nome: 'Dev', nivel: 'Junior', desc: 'Dev Jr' },
+      { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' },
+      { nome: 'Dev', nivel: 'Senior', desc: 'Dev Sr' }
+    ];
   }
 }
