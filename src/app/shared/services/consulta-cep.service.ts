@@ -9,6 +9,7 @@ export class ConsultaCepService {
   constructor( private http: HttpClient ) { }
 
   consultaCEP( cep ) {
+    console.log( cep );
     //Nova variável "cep" somente com dígitos.
     cep = cep.replace( /\D/g, "" );
 
