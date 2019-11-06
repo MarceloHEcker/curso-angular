@@ -184,6 +184,19 @@
         </app-campo-control-erro>
       </div>
     </div>
+
+    <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
+      <label for="frameworks">Frameworks</label>
+      <div class="row" id="frameworks">
+        <div class="checkbox col-sm-4" formArrayName="frameworks" *ngFor="let item of formulario.get('frameworks').controls; let i = index">
+          <label class="checkbox-inline">
+            <input type="checkbox" [formControlName]="i">{{ frameworks[i] }}
+          </label>
+        </div>
+        <app-campo-control-erro [mostrarErro]="!formulario.get('frameworks').valid" msgErro="Selecione 1 opção">
+        </app-campo-control-erro>
+      </div>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
