@@ -4,11 +4,11 @@ import { map } from "rxjs/operators";
 
 import { ConsultaCepService } from "./../shared/services/consulta-cep.service";
 
-@Component({
+@Component( {
   selector: "app-template-form",
   templateUrl: "./template-form.component.html",
-  styleUrls: ["./template-form.component.css"]
-})
+  styleUrls: [ "./template-form.component.css" ]
+} )
 export class TemplateFormComponent implements OnInit {
   usuario: any = {
     nome: null,
@@ -18,45 +18,45 @@ export class TemplateFormComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private cepService: ConsultaCepService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onSubmit(form) {
-    console.log("form", form);
-    console.log("usuario", this.usuario);
+  onSubmit( form ) {
+    console.log( "form", form );
+    console.log( "usuario", this.usuario );
 
     this.http
-      .post("https://httpbin.org/post", JSON.stringify(form.value))
-      .pipe(map(res => res))
-      .subscribe(dados => {
-        console.log(dados);
+      .post( "https://httpbin.org/post", JSON.stringify( form.value ) )
+      .pipe( map( res => res ) )
+      .subscribe( dados => {
+        console.log( dados );
         form.form.reset();
-      });
+      } );
   }
 
-  verificaValidTouch(field) {
+  verificaValidTouch( field ) {
     return !field.valid && field.touched;
   }
 
-  aplicaCssErro(field) {
+  aplicaCssErro( field ) {
     return {
-      "has-error": this.verificaValidTouch(field),
-      "has-feedback": this.verificaValidTouch(field)
+      "has-error": this.verificaValidTouch( field ),
+      "has-feedback": this.verificaValidTouch( field )
     };
   }
 
-  consultaCEP(cep, form) {
+  consultaCEP( cep, form ) {
     // Nova variável "cep" somente com dígitos
-    cep = cep.replace(/\D/g, "");
-    if (cep != null && cep !== "") {
+    cep = cep.replace( /\D/g, "" );
+    if ( cep != null && cep !== "" ) {
       this.cepService
-        .consultaCEP(cep, this.resetaDadosForm, form)
-        .subscribe(dados => this.populaDadosForm(dados, form));
+        .consultaCEP( cep )
+        .subscribe( dados => this.populaDadosForm( dados, form ) );
     }
   }
 
-  populaDadosForm(dados, formulario) {
+  populaDadosForm( dados, formulario ) {
     /*
     formulario.setValue( {
       nome: formulario.value.nome,
@@ -72,7 +72,7 @@ export class TemplateFormComponent implements OnInit {
       }
     } );
     */
-    formulario.form.patchValue({
+    formulario.form.patchValue( {
       endereco: {
         rua: dados.logradouro,
         //cep: dados.cep,
@@ -81,13 +81,13 @@ export class TemplateFormComponent implements OnInit {
         cidade: dados.localidade,
         estado: dados.uf
       }
-    });
+    } );
 
     //console.log(form);
   }
 
-  resetaDadosForm(formulario) {
-    formulario.form.patchValue({
+  resetaDadosForm( formulario ) {
+    formulario.form.patchValue( {
       endereco: {
         rua: null,
         complemento: null,
@@ -95,6 +95,6 @@ export class TemplateFormComponent implements OnInit {
         cidade: null,
         estado: null
       }
-    });
+    } );
   }
 }
