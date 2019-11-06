@@ -1,7 +1,7 @@
 .ng-invalid.ng-touched:not(form) {
-	border: 1px solid red;
+  border: 1px solid red;
 }
 
 .has-error.has-feedback .control-label {
-	color: red;
+  color: red;
 }

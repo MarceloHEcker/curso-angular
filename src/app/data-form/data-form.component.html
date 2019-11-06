@@ -1,5 +1,9 @@
-<form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="form-group" [ngClass]="aplicaCssErro('nome')">
+<form
+  class="form-horizontal mt-3"
+  [formGroup]="formulario"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form-group row" [ngClass]="aplicaCssErro('nome')">
     <div class="col-sm-12">
       <label for="nome" class="control-label">Nome</label>
     </div>
@@ -15,17 +19,16 @@
 
       <app-campo-control-erro
         [mostrarErro]="verificaValidTouched('nome')"
-        msgErro="Nome é obrigatório."
+        mensagemErro="Nome é obrigatório."
       >
       </app-campo-control-erro>
     </div>
   </div>
 
-  <div class="form-group" [ngClass]="aplicaCssErro('email')">
+  <div class="form-group row" [ngClass]="aplicaCssErro('email')">
     <div class="col-sm-12">
       <label for="email" class="control-label">Email</label>
     </div>
-
     <div class="col-sm-12">
       <input
         type="email"
@@ -34,22 +37,21 @@
         id="email"
         placeholder="nome@email.com"
       />
-
       <app-campo-control-erro
         [mostrarErro]="verificaValidTouched('email')"
-        msgErro="Email é obrigatório."
+        mensagemErro="Email é obrigatório."
       >
       </app-campo-control-erro>
       <app-campo-control-erro
         [mostrarErro]="verificaEmailInvalido()"
-        msgErro="Email inválido."
+        mensagemErro="Email inválido."
       >
       </app-campo-control-erro>
     </div>
   </div>
 
   <div formGroupName="endereco">
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
         <label for="cep" class="control-label">CEP</label>
         <input
@@ -61,7 +63,7 @@
         />
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.cep')"
-          msgErro="CEP é obrigatório."
+          mensagemErro="CEP é obrigatório."
         >
         </app-campo-control-erro>
       </div>
@@ -76,11 +78,12 @@
         />
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.numero')"
-          msgErro="Número é obrigatório"
-        ></app-campo-control-erro>
+          mensagemErro="Número é obrigatório."
+        >
+        </app-campo-control-erro>
       </div>
 
-      <div class="md-6">
+      <div class="col-md-6">
         <label for="complemento" class="control-label">Complemento</label>
         <input
           type="text"
@@ -91,7 +94,7 @@
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="aplicaCssErro('endereco.rua')">
+    <div class="form-group row" [ngClass]="aplicaCssErro('endereco.rua')">
       <div class="col-sm-12">
         <label for="rua" class="control-label">Rua</label>
       </div>
@@ -106,13 +109,13 @@
 
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.rua')"
-          msgErro="Rua é obrigatório."
+          mensagemErro="Rua é obrigatório."
         >
         </app-campo-control-erro>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-md-5" [ngClass]="aplicaCssErro('endereco.bairro')">
         <label for="bairro" class="control-label">Bairro</label>
         <input
@@ -123,7 +126,7 @@
         />
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.bairro')"
-          msgErro="Bairro é obrigatório."
+          mensagemErro="Bairro é obrigatório."
         >
         </app-campo-control-erro>
       </div>
@@ -138,7 +141,7 @@
         />
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.cidade')"
-          msgErro="Cidade é obrigatório."
+          mensagemErro="Cidade é obrigatório."
         >
         </app-campo-control-erro>
       </div>
@@ -153,7 +156,7 @@
         />
         <app-campo-control-erro
           [mostrarErro]="verificaValidTouched('endereco.estado')"
-          msgErro="Estado é obrigatório."
+          mensagemErro="Estado é obrigatório."
         >
         </app-campo-control-erro>
       </div>
