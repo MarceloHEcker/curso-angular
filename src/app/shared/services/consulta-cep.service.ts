@@ -2,7 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class ConsultaCepService {
   constructor(private http: HttpClient) {}
 
@@ -17,8 +19,6 @@ export class ConsultaCepService {
 
       //Valida o formato do CEP.
       if (validacep.test(cep)) {
-        resetaFormCallback(formulario);
-
         return this.http.get(`//viacep.com.br/ws/${cep}/json`);
       }
     }
