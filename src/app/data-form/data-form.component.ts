@@ -10,6 +10,7 @@ import { map } from "rxjs/operators";
 
 import { EstadoBr } from "./../shared/models/estado-br.model";
 import { DropdownService } from "../shared/services/dropdown.service";
+import { ConsultaCepService } from "../shared/services/consulta-cep.service";
 
 @Component({
   selector: "app-data-form",
@@ -23,7 +24,8 @@ export class DataFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private dropdownService: DropdownService
+    private dropdownService: DropdownService,
+    private cepService: ConsultaCepService
   ) {}
 
   ngOnInit() {
@@ -119,27 +121,13 @@ export class DataFormComponent implements OnInit {
   consultaCEP() {
     let cep = this.formulario.get("endereco.cep").value;
 
-    //Nova variável "cep" somente com dígitos
-    cep = cep.replace(/\D/g, "");
-
-    if (cep != "") {
-      //Expressão regular para validar o CEP
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP
-      if (validacep.test(cep)) {
-        this.resetaDadosForm();
-
-        this.http
-          .get(`//viacep.com.br/ws/${cep}/json`)
-          .pipe(map(dados => dados))
-          .subscribe(dados => this.populaDadosForm(dados));
-      }
-    }
+    this.cepService
+      .consultaCEP(cep, this.resetaDadosForm, this.formulario)
+      .subscribe(dados => this.populaDadosForm(dados));
   }
 
   populaDadosForm(dados) {
-    this.formulario.setValue({});
+    //this.formulario.setValue({});
 
     this.formulario.patchValue({
       endereco: {
@@ -157,8 +145,8 @@ export class DataFormComponent implements OnInit {
     //console.log(form);
   }
 
-  resetaDadosForm() {
-    this.formulario.patchValue({
+  resetaDadosForm(formulario) {
+    formulario.patchValue({
       endereco: {
         rua: null,
         complemento: null,

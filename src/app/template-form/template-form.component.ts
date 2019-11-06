@@ -1,67 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
-@Component( {
-  selector: 'app-template-form',
-  templateUrl: './template-form.component.html',
-  styleUrls: [ './template-form.component.css' ]
-} )
+import { ConsultaCepService } from "./../shared/services/consulta-cep.service";
+
+@Component({
+  selector: "app-template-form",
+  templateUrl: "./template-form.component.html",
+  styleUrls: ["./template-form.component.css"]
+})
 export class TemplateFormComponent implements OnInit {
-
   usuario: any = {
     nome: null,
-    email: null,
+    email: null
   };
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private cepService: ConsultaCepService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  onSubmit( form ) {
-    console.log( "form", form );
-    console.log( 'usuario', this.usuario );
+  onSubmit(form) {
+    console.log("form", form);
+    console.log("usuario", this.usuario);
 
-
-    this.http.post( 'https://httpbin.org/post', JSON.stringify( form.value ) )
-      .pipe( map( res => res ) )
-      .subscribe( dados => {
-        console.log( dados );
+    this.http
+      .post("https://httpbin.org/post", JSON.stringify(form.value))
+      .pipe(map(res => res))
+      .subscribe(dados => {
+        console.log(dados);
         form.form.reset();
-      } );
-
+      });
   }
 
-  verificaValidTouch( field ) {
+  verificaValidTouch(field) {
     return !field.valid && field.touched;
   }
 
-  aplicaCssErro( field ) {
+  aplicaCssErro(field) {
     return {
-      'has-error': this.verificaValidTouch( field ),
-      'has-feedback': this.verificaValidTouch( field ),
-    }
+      "has-error": this.verificaValidTouch(field),
+      "has-feedback": this.verificaValidTouch(field)
+    };
   }
 
-  consultaCEP( cep, form ) {
+  consultaCEP(cep, form) {
     // Nova variável "cep" somente com dígitos
-    cep = cep.replace( /\D/g, '' );
-    if ( cep != "" ) {
-      const validacep = /^[0-9]{8}$/;
-
-      if ( validacep.test( cep ) ) {
-
-        this.resetaDadosForm( form );
-
-        this.http.get( `//viacep.com.br/ws/${ cep }/json` )
-          .pipe( map( dados => dados ) )
-          .subscribe( dados => this.populaDadosForm( dados, form ) );
-      }
+    cep = cep.replace(/\D/g, "");
+    if (cep != null && cep !== "") {
+      this.cepService
+        .consultaCEP(cep, this.resetaDadosForm, form)
+        .subscribe(dados => this.populaDadosForm(dados, form));
     }
   }
 
-  populaDadosForm( dados, formulario ) {
+  populaDadosForm(dados, formulario) {
     /*
     formulario.setValue( {
       nome: formulario.value.nome,
@@ -77,7 +72,7 @@ export class TemplateFormComponent implements OnInit {
       }
     } );
     */
-    formulario.form.patchValue( {
+    formulario.form.patchValue({
       endereco: {
         rua: dados.logradouro,
         //cep: dados.cep,
@@ -86,15 +81,13 @@ export class TemplateFormComponent implements OnInit {
         cidade: dados.localidade,
         estado: dados.uf
       }
-    } );
-
+    });
 
     //console.log(form);
-
   }
 
-  resetaDadosForm( formulario ) {
-    formulario.form.patchValue( {
+  resetaDadosForm(formulario) {
+    formulario.form.patchValue({
       endereco: {
         rua: null,
         complemento: null,
@@ -102,7 +95,6 @@ export class TemplateFormComponent implements OnInit {
         cidade: null,
         estado: null
       }
-    } );
+    });
   }
-
 }
