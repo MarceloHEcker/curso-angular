@@ -15,10 +15,8 @@
              id="nome"
              placeholder="Nome" />
 
-      <app-campo-control-erro
-                              [mostrarErro]="verificaValidTouched('nome')"
-                              mensagemErro="Nome é obrigatório.">
-      </app-campo-control-erro>
+      <app-error-msg [control]="formulario.get('nome')" label="Nome">
+      </app-error-msg>
     </div>
   </div>
 

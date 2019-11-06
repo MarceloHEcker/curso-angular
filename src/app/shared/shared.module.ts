@@ -8,18 +8,20 @@ import { CampoControlErroComponent } from "./campo-control-erro/campo-control-er
 
 import { ConsultaCepService } from "./services/consulta-cep.service";
 import { DropdownService } from "./services/dropdown.service";
+import { ErrorMsgComponent } from './error-msg/error-msg.component';
 
-@NgModule({
-  imports: [CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule],
-  declarations: [FormDebugComponent, CampoControlErroComponent],
+@NgModule( {
+  imports: [ CommonModule, HttpClientModule, FormsModule, ReactiveFormsModule ],
+  declarations: [ FormDebugComponent, CampoControlErroComponent, ErrorMsgComponent ],
   exports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     FormDebugComponent,
-    CampoControlErroComponent
+    CampoControlErroComponent,
+    ErrorMsgComponent,
   ],
-  providers: [ConsultaCepService, DropdownService]
-})
-export class SharedModule {}
+  providers: [ ConsultaCepService, DropdownService ]
+} )
+export class SharedModule { }
