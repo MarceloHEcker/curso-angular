@@ -40,13 +40,13 @@
                               mensagemErro="Email inválido.">
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'PENDING'"
-                              msgErro="Validando email...">
+                              mensagemErro="Validando email...">
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="formulario.get('email').status === 'VALID'"
-                              msgErro="Email válido!">
+                              mensagemErro="Email válido!">
       </app-campo-control-erro>
       <app-campo-control-erro [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
-                              msgErro="Email já cadastrado!">
+                              mensagemErro="Email já cadastrado!">
       </app-campo-control-erro>
     </div>
   </div>
@@ -76,7 +76,7 @@
                                 [mostrarErro]="verificaRequired('endereco.cep')"
                                 mensagemErro="CEP é obrigatório.">
         </app-campo-control-erro>
-        <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep').hasError('cepInvalido')" msgErro="CEP inválido.">
+        <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep').hasError('cepInvalido')" mensagemErro="CEP inválido.">
         </app-campo-control-erro>
       </div>
 
@@ -191,7 +191,6 @@
       </div>
     </div>
 
-
   </div>
 
   <div class="form-group">
@@ -213,7 +212,7 @@
             <input type="checkbox" [formControlName]="i">{{ frameworks[i] }}
           </label>
         </div>
-        <app-campo-control-erro [mostrarErro]="!formulario.get('frameworks').valid" msgErro="Selecione 1 opção">
+        <app-campo-control-erro [mostrarErro]="!formulario.get('frameworks').valid" mensagemErro="Selecione 1 opção">
         </app-campo-control-erro>
       </div>
     </div>

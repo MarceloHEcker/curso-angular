@@ -93,8 +93,10 @@ export class DataFormComponent implements OnInit {
   onSubmit() {
     console.log( this.formulario );
 
+    //copiando os valores do formulário para um valueSubmit
     let valueSubmit = Object.assign( {}, this.formulario.value );
 
+    //analisando todos os valores do formulário dando replace em frameworks, colocando uma lista com os nomes dos frameworks
     valueSubmit = Object.assign( valueSubmit, {
       frameworks: valueSubmit.frameworks
         .map( ( v, i ) => v ? this.frameworks[ i ] : null )
