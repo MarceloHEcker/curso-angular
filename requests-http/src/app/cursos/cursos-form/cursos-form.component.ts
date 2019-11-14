@@ -1,7 +1,8 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap, exhaustMap } from 'rxjs/operators';
 
 import { CursosService } from './../cursos.service';
 import { AlertModalService } from './../../shared/alert-modal.service';
@@ -20,12 +21,43 @@ export class CursosFormComponent implements OnInit {
 		private fb: FormBuilder,
 		private service: CursosService,
 		private modal: AlertModalService,
-		private location: Location
+		private location: Location,
+		private route: ActivatedRoute,
 	) { }
 
 	ngOnInit() {
+
+		const registro = null;
+		// this.route.params.subscribe(
+		//   (params: any) => {
+		//     const id = params['id'];
+		//     console.log(id);
+		//     const curso$ = this.service.loadByID(id);
+		//     curso$.subscribe(curso => {
+		//       registro = curso;
+		//       this.updateForm(curso);
+		//     });
+		//   }
+		// );
+
+		// console.log(registro);
+
+		this.route.params.pipe(
+			map( ( params: any ) => params[ 'id' ] ),
+			switchMap( id => this.service.loadByID( id ) ),
+			//switchMap(cursos => obterAulas)
+		).subscribe( curso => this.updateForm( curso ) );
+
 		this.form = this.fb.group( {
+			id: [ null ],
 			nome: [ null, [ Validators.required, Validators.minLength( 3 ), Validators.maxLength( 250 ) ] ]
+		} );
+	}
+
+	updateForm( curso ) {
+		this.form.patchValue( {
+			id: curso.id,
+			nome: curso.nome
 		} );
 	}
 
