@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CursosService } from '../cursos.service';
 import { Curso } from './../curso';
-import { Observable } from 'rxjs';
+import { Observable, empty, of, Subject } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-cursos-lista',
@@ -12,11 +13,31 @@ import { Observable } from 'rxjs';
 export class CursosListaComponent implements OnInit {
 
   cursos$: Observable<Curso[]>;
+  error$ = new Subject<boolean>();
 
   constructor( private service: CursosService ) { }
 
   ngOnInit() {
-    this.cursos$ = this.service.list();
+    this.onRefresh();
+  }
+
+  onRefresh() {
+    this.cursos$ = this.service.list().pipe(
+      // map(), 
+      // tap(), 
+      // switchMap(),
+      catchError( error => {
+        console.error( error );
+        this.error$.next( true );
+        return empty();
+      } )
+    );
+
+    this.service.list().pipe( catchError( error => empty() ) ).subscribe(
+      dados => {
+        console.log( dados );
+      }
+    );
   }
 
 }
