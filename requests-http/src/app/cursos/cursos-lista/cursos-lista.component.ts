@@ -42,11 +42,11 @@ export class CursosListaComponent implements OnInit {
       } )
     );
 
-    this.service.list().pipe( catchError( error => empty() ) ).subscribe(
+    /*this.service.list().pipe( catchError( error => empty() ) ).subscribe(
       dados => {
         console.log( dados );
       }
-    );
+    ); */
   }
 
   handleError() {
