@@ -14,7 +14,11 @@ const routes: Routes = [
   {
     path: 'rxjs-poc',
     loadChildren: "./unsubscribe-rxjs/unsubscribe-rxjs.module#UnsubscribeRxjsModule"
-  }
+  },
+  {
+    path: 'upload',
+    loadChildren: "./upload-file/upload-file.module#UploadFileModule"
+  },
 ];
 
 @NgModule( {
